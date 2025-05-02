@@ -4,7 +4,11 @@ import type { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchStreamLink, loggerLink } from "@trpc/client";
 import { createTRPCClient } from "@trpc/client";
-import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import type {
+	inferRouterContext,
+	inferRouterInputs,
+	inferRouterOutputs,
+} from "@trpc/server";
 import { createTRPCContext } from "@trpc/tanstack-react-query";
 import { useState } from "react";
 import SuperJSON from "superjson";
@@ -15,6 +19,7 @@ import { makeQueryClient } from "./query-client";
 // Type helpers for inputs and outputs
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type RouterContext = inferRouterContext<AppRouter>;
 
 // Create tRPC context
 export const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();

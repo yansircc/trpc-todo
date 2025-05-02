@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import type { RouterOutputs } from "@/trpc/client";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 
 interface TodoItemProps {
 	todo: RouterOutputs["todos"]["getAll"][number];
@@ -42,9 +42,18 @@ export function TodoItem({
 				size="sm"
 				onClick={() => onDelete(todo.id)}
 				disabled={isDeletePending}
-				className="opacity-0 transition-opacity group-hover:opacity-100"
+				className={cn(
+					"transition-all",
+					isDeletePending
+						? "opacity-100" // 删除中始终显示
+						: "opacity-0 group-hover:opacity-100", // 仅在 hover 时显示
+				)}
 			>
-				<Trash2 className="h-3.5 w-3.5 text-gray-400" />
+				{isDeletePending ? (
+					<Loader2 className="h-3.5 w-3.5 animate-spin text-gray-400" />
+				) : (
+					<Trash2 className="h-3.5 w-3.5 text-gray-400" />
+				)}
 			</Button>
 		</li>
 	);
