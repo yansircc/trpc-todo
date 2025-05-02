@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 
-import { Toaster } from "@/components/ui/toaster";
 import { TRPCClientProvider } from "@/trpc/client";
 import { Inter } from "next/font/google";
 
@@ -22,10 +21,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<TRPCClientProvider>
-					{children}
-					<Toaster />
-				</TRPCClientProvider>
+				<TRPCClientProvider>{children}</TRPCClientProvider>
 			</body>
 		</html>
 	);
