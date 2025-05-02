@@ -10,11 +10,12 @@ import type { AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = sqliteTableCreator((name) => `learn-trpc_${name}`);
 
-export const posts = createTable(
-	"post",
+export const todos = createTable(
+	"todo",
 	(d) => ({
 		id: d.integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
-		name: d.text({ length: 256 }),
+		title: d.text({ length: 256 }).notNull(),
+		completed: d.integer({ mode: "boolean" }).default(false).notNull(),
 		createdById: d
 			.text({ length: 255 })
 			.notNull()
@@ -26,8 +27,8 @@ export const posts = createTable(
 		updatedAt: d.integer({ mode: "timestamp" }).$onUpdate(() => new Date()),
 	}),
 	(t) => [
-		index("created_by_idx").on(t.createdById),
-		index("name_idx").on(t.name),
+		index("todo_created_by_idx").on(t.createdById),
+		index("todo_title_idx").on(t.title),
 	],
 );
 
@@ -45,6 +46,11 @@ export const users = createTable("user", (d) => ({
 
 export const usersRelations = relations(users, ({ many }) => ({
 	accounts: many(accounts),
+	todos: many(todos),
+}));
+
+export const todosRelations = relations(todos, ({ one }) => ({
+	user: one(users, { fields: [todos.createdById], references: [users.id] }),
 }));
 
 export const accounts = createTable(
