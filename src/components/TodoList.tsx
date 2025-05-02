@@ -24,9 +24,7 @@ export function TodoList() {
 
 	return (
 		<div className="w-full max-w-md">
-			<h2 className="mb-8 font-light text-2xl tracking-tight">
-				{user?.name ? `Todos(${user.name} 专属)` : "Todos"}
-			</h2>
+			<h2 className="mb-8 font-light text-2xl tracking-tight">Todos</h2>
 
 			<form onSubmit={handleCreateTodo} className="mb-8 flex gap-2">
 				<Input

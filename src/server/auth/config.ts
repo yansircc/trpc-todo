@@ -63,5 +63,9 @@ export const authConfig = {
 				id: user.id,
 			},
 		}),
+		redirect: ({ url, baseUrl }) => {
+			if (url.startsWith("/")) return `${baseUrl}${url}`;
+			return baseUrl;
+		},
 	},
 } satisfies NextAuthConfig;
